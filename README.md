@@ -1,7 +1,7 @@
 # Next.js Yandex Metrica
 
 [![npm version](https://badge.fury.io/js/next-yandex-metrica.svg)](https://badge.fury.io/js/next-yandex-metrica)
-[![codecov](https://codecov.io/github/reapziq/next-yandex-metrica/branch/main/graph/badge.svg?token=OZ8UX4NPK2)](https://codecov.io/github/reapziq/next-yandex-metrica)
+[![codecov](https://codecov.io/gh/v-doronin/next-yandex-metrica/graph/badge.svg?token=OZ8UX4NPK2)](https://codecov.io/gh/v-doronin/next-yandex-metrica)
 
 Yandex Metrica integration for Next.js
 

@@ -7,7 +7,7 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/reapziq/next-yandex-metrica",
+  "repository": "https://github.com/v-doronin/next-yandex-metrica",
   "author": "Vladislav Doronin <reapziq@gmail.com>",
   "license": "MIT",
   "keywords": [
