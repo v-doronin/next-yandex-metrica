@@ -13,6 +13,7 @@ interface Props {
   strategy?: ScriptProps['strategy'];
   initParameters?: InitParameters;
   shouldUseAlternativeCDN?: boolean;
+  appRouter?: boolean;
 }
 
 export const YandexMetricaProvider: FC<Props> = ({
@@ -21,13 +22,14 @@ export const YandexMetricaProvider: FC<Props> = ({
   strategy = 'afterInteractive',
   initParameters,
   shouldUseAlternativeCDN = false,
+  appRouter = false,
 }) => {
   const YANDEX_METRICA_ID = process.env.NEXT_PUBLIC_YANDEX_METRICA_ID;
   const id = useMemo(() => {
     return tagID || (YANDEX_METRICA_ID ? Number(YANDEX_METRICA_ID) : null);
   }, [YANDEX_METRICA_ID, tagID]);
 
-  useTrackRouteChange({ tagID: id });
+  useTrackRouteChange({ tagID: id, appRouter });
 
   if (!id) {
     console.warn('[next-yandex-metrica] Yandex.Metrica tag ID is not defined');
