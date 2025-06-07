@@ -3,6 +3,7 @@ import React, { createContext, FC, ReactNode, useMemo } from 'react';
 
 import { useTrackRouteChange } from '../hooks/useTrackRouteChange';
 import { InitParameters } from '../lib/types/parameters';
+import { NextRouter } from '../lib/types/router';
 import { MetricaPixel } from './MetricaPixel';
 
 export const MetricaTagIDContext = createContext<number | null>(null);
@@ -13,7 +14,7 @@ interface Props {
   strategy?: ScriptProps['strategy'];
   initParameters?: InitParameters;
   shouldUseAlternativeCDN?: boolean;
-  appRouter?: boolean;
+  router: NextRouter;
 }
 
 export const YandexMetricaProvider: FC<Props> = ({
@@ -22,14 +23,14 @@ export const YandexMetricaProvider: FC<Props> = ({
   strategy = 'afterInteractive',
   initParameters,
   shouldUseAlternativeCDN = false,
-  appRouter = false,
+  router,
 }) => {
   const YANDEX_METRICA_ID = process.env.NEXT_PUBLIC_YANDEX_METRICA_ID;
   const id = useMemo(() => {
     return tagID || (YANDEX_METRICA_ID ? Number(YANDEX_METRICA_ID) : null);
   }, [YANDEX_METRICA_ID, tagID]);
 
-  useTrackRouteChange({ tagID: id, appRouter });
+  useTrackRouteChange({ tagID: id, router });
 
   if (!id) {
     console.warn('[next-yandex-metrica] Yandex.Metrica tag ID is not defined');
