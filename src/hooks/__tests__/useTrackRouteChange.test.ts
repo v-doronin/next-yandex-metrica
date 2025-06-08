@@ -32,9 +32,7 @@ describe('useTrackRouteChange', () => {
     (usePathname as jest.Mock).mockReturnValue('/initial');
     const onSpy = jest.spyOn(Router.events, 'on');
 
-    const { rerender } = renderHook(() =>
-      useTrackRouteChange({ tagID: 444, router: 'app' }),
-    );
+    const { rerender } = renderHook(() => useTrackRouteChange({ tagID: 444, router: 'app' }));
 
     expect(YM_MOCK).toHaveBeenCalledTimes(1);
     expect(YM_MOCK).toHaveBeenLastCalledWith(444, 'hit', '/initial');
