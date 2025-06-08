@@ -1,6 +1,6 @@
 {
   "name": "next-yandex-metrica",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Yandex Metrica integration for Next.js",
   "files": [
     "dist"
