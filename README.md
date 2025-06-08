@@ -11,6 +11,7 @@ Yandex Metrica integration for Next.js
 
 To enable analytics, include `YandexMetricaProvider` in the custom [`_app`](https://nextjs.org/docs/advanced-features/custom-app) component.
 
+#### Pages router
 ```jsx
 // pages/_app.tsx
 import { YandexMetricaProvider } from 'next-yandex-metrica';
@@ -20,6 +21,29 @@ export default function MyApp({ Component, pageProps }) {
     <YandexMetricaProvider
       tagID={12345678}
       initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
+      router="pages"
+    >
+      <Component {...pageProps} />
+    </YandexMetricaProvider>
+  );
+}
+```
+
+#### App router
+```tsx
+// app/layout.tsx
+import { YandexMetricaProvider } from 'next-yandex-metrica';
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: ReactNode;
+}>) {
+  return (
+    <YandexMetricaProvider
+      tagID={12345678}
+      initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
+      router="app"
     >
       <Component {...pageProps} />
     </YandexMetricaProvider>
@@ -29,12 +53,13 @@ export default function MyApp({ Component, pageProps }) {
 
 #### `YandexMetricaProvider` Props
 
-| Name                      | Description                                                                                                                          |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `tagID`                   | Yandex.Metrica tag ID.                                                                                                               |
-| `strategy`                | [next/script](https://nextjs.org/docs/api-reference/next/script#strategy) loading strategy. Defaults to `afterInteractive`.          |
-| `initParameters`          | Yandex.Metrica tag [initialization parameters](https://yandex.com/support/metrica/code/counter-initialize.html).                     |
+| Name                      | Description                                                                                                                         |
+|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `tagID`                   | Yandex.Metrica tag ID.                                                                                                              |
+| `strategy`                | [next/script](https://nextjs.org/docs/api-reference/next/script#strategy) loading strategy. Defaults to `afterInteractive`.         |
+| `initParameters`          | Yandex.Metrica tag [initialization parameters](https://yandex.com/support/metrica/code/counter-initialize.html).                    |
 | `shouldUseAlternativeCDN` | Use the [alternative CDN](https://yandex.ru/support/metrica/general/counter-general.html?lang=en#other__cdn) to load Yandex.Metrica. |
+| `router`                  | `app` or `pages`                                                                                                               |
 
 Yandex.Metrica tag ID is read from the `tagID` property and the `NEXT_PUBLIC_YANDEX_METRICA_ID` environment variable. If both are set, the provider property takes priority.
 

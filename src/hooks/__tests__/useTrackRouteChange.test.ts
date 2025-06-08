@@ -1,4 +1,5 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { usePathname } from 'next/navigation';
 import { Router } from 'next/router';
 
 import { useTrackRouteChange } from '../useTrackRouteChange';
@@ -9,9 +10,13 @@ Object.defineProperty(window, 'ym', {
   writable: true,
 });
 
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
+
 describe('useTrackRouteChange', () => {
-  it('handles route change', () => {
-    renderHook(() => useTrackRouteChange({ tagID: 444 }));
+  it('handles route change for pages router', () => {
+    renderHook(() => useTrackRouteChange({ tagID: 444, router: 'pages' }));
 
     Router.events.emit('routeChangeStart');
 
@@ -21,5 +26,28 @@ describe('useTrackRouteChange', () => {
 
     expect(YM_MOCK).toHaveBeenCalledTimes(1);
     expect(YM_MOCK).toHaveBeenCalledWith(444, 'hit', 'https://test.com/');
+  });
+
+  it('handles route change for app router', () => {
+    (usePathname as jest.Mock).mockReturnValue('/initial');
+    const onSpy = jest.spyOn(Router.events, 'on');
+
+    const { rerender } = renderHook(() =>
+      useTrackRouteChange({ tagID: 444, router: 'app' }),
+    );
+
+    expect(YM_MOCK).toHaveBeenCalledTimes(1);
+    expect(YM_MOCK).toHaveBeenLastCalledWith(444, 'hit', '/initial');
+
+    expect(onSpy).not.toHaveBeenCalled();
+
+    (usePathname as jest.Mock).mockReturnValue('/second');
+
+    act(() => {
+      rerender();
+    });
+
+    expect(YM_MOCK).toHaveBeenCalledTimes(2);
+    expect(YM_MOCK).toHaveBeenLastCalledWith(444, 'hit', '/second');
   });
 });
