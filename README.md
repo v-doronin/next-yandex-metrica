@@ -9,9 +9,9 @@ Yandex Metrica integration for Next.js
 
 ### Add the provider
 
-To enable analytics, include `YandexMetricaProvider` in the custom [`_app`](https://nextjs.org/docs/advanced-features/custom-app) component.
-
 #### Pages router
+
+To enable analytics, include `YandexMetricaProvider` in the custom [`_app`](https://nextjs.org/docs/advanced-features/custom-app) component.
 
 ```jsx
 // pages/_app.tsx
@@ -52,6 +52,8 @@ export default function RootLayout({
   );
 }
 ```
+
+> **Note:** `YandexMetricaProvider` uses the `"use client"` directive.
 
 #### `YandexMetricaProvider` Props
 
