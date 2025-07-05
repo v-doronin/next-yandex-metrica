@@ -1,3 +1,5 @@
+'use client';
+
 import Script, { ScriptProps } from 'next/script';
 import React, { createContext, FC, ReactNode, useMemo } from 'react';
 
