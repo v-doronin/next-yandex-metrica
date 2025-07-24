@@ -47,7 +47,7 @@ export default function RootLayout({
       initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
       router="app"
     >
-      <Component {...pageProps} />
+      {children}
     </YandexMetricaProvider>
   );
 }
