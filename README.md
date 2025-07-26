@@ -11,13 +11,11 @@ Yandex Metrica integration for Next.js
 
 #### Pages router
 
-To enable analytics, include `YandexMetricaProvider` in the custom [`_app`](https://nextjs.org/docs/advanced-features/custom-app) component.
-
-```jsx
+```tsx
 // pages/_app.tsx
 import { YandexMetricaProvider } from 'next-yandex-metrica';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <YandexMetricaProvider
       tagID={12345678}
@@ -36,18 +34,14 @@ export default function MyApp({ Component, pageProps }) {
 // app/layout.tsx
 import { YandexMetricaProvider } from 'next-yandex-metrica';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <YandexMetricaProvider
       tagID={12345678}
       initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
       router="app"
     >
-      <Component {...pageProps} />
+      {children}
     </YandexMetricaProvider>
   );
 }
