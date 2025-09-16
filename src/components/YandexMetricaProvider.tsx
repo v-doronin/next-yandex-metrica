@@ -6,7 +6,6 @@ import React, { createContext, FC, ReactNode, useMemo } from 'react';
 import { useTrackRouteChange } from '../hooks/useTrackRouteChange';
 import { InitParameters } from '../lib/types/parameters';
 import { NextRouter } from '../lib/types/router';
-import { MetricaPixel } from './MetricaPixel';
 
 export const MetricaTagIDContext = createContext<number | null>(null);
 
@@ -56,9 +55,12 @@ export const YandexMetricaProvider: FC<Props> = ({
           ym(${id}, "init", ${JSON.stringify(initParameters || {})});
         `}
       </Script>
-      <noscript id="yandex-metrica-pixel">
-        <MetricaPixel tagID={id} />
-      </noscript>
+      <noscript
+        id="yandex-metrica-pixel"
+        dangerouslySetInnerHTML={{
+          __html: `<div><img src="https://mc.yandex.ru/watch/${id}" style="position:absolute; left:-9999px;" alt="" /></div>`,
+        }}
+      />
       <MetricaTagIDContext.Provider value={id}>{children}</MetricaTagIDContext.Provider>
     </>
   );
