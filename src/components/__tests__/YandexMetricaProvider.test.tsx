@@ -94,4 +94,19 @@ describe('YandexMetricaProvider', () => {
       `${METRICA_SCRIPT} ym(444, "init", {});`,
     );
   });
+
+  it('renders tracking pixel', () => {
+    render(
+      <YandexMetricaProvider tagID={444}>
+        <div />
+      </YandexMetricaProvider>,
+    );
+
+    const pixelElement = document.getElementById('yandex-metrica-pixel');
+    expect(pixelElement).toBeInTheDocument();
+
+    expect(pixelElement?.innerHTML).toBe(
+      '<div><img src="https://mc.yandex.ru/watch/444" style="position:absolute; left:-9999px;" alt="" /></div>',
+    );
+  });
 });
