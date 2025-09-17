@@ -24,12 +24,12 @@ const METRICA_SCRIPT_ALTERNATIVE_CDN =
 describe('YandexMetricaProvider', () => {
   it('renders', () => {
     render(
-      <YandexMetricaProvider tagID={444}>
+      <YandexMetricaProvider tagID={444} router="pages">
         <div />
       </YandexMetricaProvider>,
     );
 
-    expect(useTrackRouteChange).toHaveBeenCalledWith({ tagID: 444 });
+    expect(useTrackRouteChange).toHaveBeenCalledWith({ tagID: 444, router: 'pages' });
 
     expect(document.getElementById('yandex-metrica')).toHaveTextContent(
       `${METRICA_SCRIPT} ym(444, "init", {});`,
@@ -42,6 +42,7 @@ describe('YandexMetricaProvider', () => {
       <YandexMetricaProvider
         tagID={444}
         initParameters={{ accurateTrackBounce: false, clickmap: false }}
+        router="pages"
       >
         <div />
       </YandexMetricaProvider>,
@@ -54,12 +55,12 @@ describe('YandexMetricaProvider', () => {
 
   it('renders with an alternative CDN url', () => {
     render(
-      <YandexMetricaProvider tagID={444} shouldUseAlternativeCDN>
+      <YandexMetricaProvider tagID={444} router="pages" shouldUseAlternativeCDN>
         <div />
       </YandexMetricaProvider>,
     );
 
-    expect(useTrackRouteChange).toHaveBeenCalledWith({ tagID: 444 });
+    expect(useTrackRouteChange).toHaveBeenCalledWith({ tagID: 444, router: 'pages' });
 
     expect(document.getElementById('yandex-metrica')).toHaveTextContent(
       `${METRICA_SCRIPT_ALTERNATIVE_CDN} ym(444, "init", {});`,
@@ -70,7 +71,7 @@ describe('YandexMetricaProvider', () => {
   it('renders children when tagID is not defined', () => {
     const spyOnWarn = jest.spyOn(console, 'warn').mockImplementation();
     render(
-      <YandexMetricaProvider>
+      <YandexMetricaProvider router="pages">
         <div id="content" />
       </YandexMetricaProvider>,
     );
@@ -85,7 +86,7 @@ describe('YandexMetricaProvider', () => {
   it('gets tagID from NEXT_PUBLIC_YANDEX_METRICA_ID', () => {
     process.env.NEXT_PUBLIC_YANDEX_METRICA_ID = '444';
     render(
-      <YandexMetricaProvider>
+      <YandexMetricaProvider router="pages">
         <div />
       </YandexMetricaProvider>,
     );
@@ -97,7 +98,7 @@ describe('YandexMetricaProvider', () => {
 
   it('renders tracking pixel', () => {
     render(
-      <YandexMetricaProvider tagID={444}>
+      <YandexMetricaProvider tagID={444} router="pages">
         <div />
       </YandexMetricaProvider>,
     );
