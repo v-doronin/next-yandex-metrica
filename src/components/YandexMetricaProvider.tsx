@@ -55,6 +55,9 @@ export const YandexMetricaProvider: FC<Props> = ({
           ym(${id}, "init", ${JSON.stringify(initParameters || {})});
         `}
       </Script>
+      {/** Using dangerouslySetInnerHTML to bypass Next.js image optimization which interferes with Yandex tracking pixel
+       * @see https://github.com/vercel/next.js/issues/56882
+       */}
       <noscript
         id="yandex-metrica-pixel"
         dangerouslySetInnerHTML={{
